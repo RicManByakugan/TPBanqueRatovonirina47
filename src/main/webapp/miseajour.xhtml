@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template_defaut.xhtml">
+            
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam    name="idCompte" 
+                                    value="#{miseAJour.idCompte}"
+                                    required="true"/>
+                    <f:viewAction action="#{miseAJour.loadCompte}"/>
+                </f:metadata>
+            </ui:define>
+            
+            <ui:define name="top">
+                Mise a jour
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form rendered="#{miseAJour.compteBancaire != null}"  id="form">
+                        <h:panelGrid columns="3">
+
+                            <h:outputLabel 
+                                value="ID :" 
+                                for="idCompte" />
+                            <h:inputText 
+                                id="idCompte" 
+                                value="#{miseAJour.compteBancaire.id}" 
+                                title="ID" 
+                                required="true" 
+                                requiredMessage="Le champ ID est obligatoire" 
+                                readonly="true"/>
+                            <h:message for="idCompte"/>
+                            <h:outputLabel 
+                                value="NOM :" 
+                                for="nom" />
+                            <h:inputText 
+                                id="nom" 
+                                value="#{miseAJour.compteBancaire.nom}"
+                                title="NOM"  
+                                required="true" 
+                                requiredMessage="Le champ NOM est obligatoire" 
+                                 />
+                            <h:message for="nom"/>
+                            <h:commandButton id="update" value="Enregistrer" action="#{miseAJour.mettreAjour}"/>                       
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputText value="Aucun compte pour l' ID : #{miseAJour.idCompte} !" rendered="#{miseAJour.compteBancaire == null}"/>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
