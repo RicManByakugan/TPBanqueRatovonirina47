@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template_defaut.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam    name="idCompte" 
+                                    value="#{mouvement.idCompte}"
+                                    required="true"/>
+                    <f:viewAction action="#{mouvement.loadCompte}"/>
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="top">
+                Dépôt | retrait
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form rendered="#{mouvement.compteBancaire != null}"  id="form">
+                        <h:outputLabel 
+                            value="SOLDE ACTUEL : #{mouvement.compteBancaire.solde}" 
+                            for="solde_actuel" />
+                        <h:panelGrid columns="3">
+
+                            <h:outputLabel 
+                                value="ID :" 
+                                for="idCompte" />
+                            <h:inputText 
+                                id="idCompte" 
+                                value="#{mouvement.compteBancaire.id}" 
+                                title="ID" 
+                                required="true" 
+                                requiredMessage="Le champ ID est obligatoire" 
+                                readonly="true"/>
+                            <h:message for="idCompte"/>
+                            <h:outputLabel 
+                                value="NOM :" 
+                                for="nom" />
+                            <h:inputText 
+                                id="nom" 
+                                value="#{mouvement.compteBancaire.nom}"
+                                title="NOM"  
+                                required="true" 
+                                requiredMessage="Le champ NOM est obligatoire" 
+                                readonly="true" />
+                            <h:message for="nom"/>
+                            <h:outputLabel 
+                                value="TYPE DE MOUVEMENT :" 
+                                for="type" />                    
+                            <h:selectOneMenu   id="type"
+                                               value="#{mouvement.type}" 
+                                               title="TYPE DE MOUVEMENT"  
+                                               required="true" 
+                                               requiredMessage="Le champ TYPE DE MOUVEMENT est obligatoire" >
+                                <f:selectItem itemValue="" itemLabel=""/>
+                                <f:selectItem itemValue="depot" itemLabel="Dépôt"/>
+                                <f:selectItem itemValue="retrait" itemLabel="Retrait"/>
+                            </h:selectOneMenu> 
+                            <h:message for="type"/>
+                            <h:outputLabel  value="Montant pour le mouvement :" 
+                                            for="somme"/>
+                            <h:inputText id="somme" size="3" value="#{mouvement.somme}"
+                                         required="true" />
+                            <h:message for="somme"/>
+                            <h:commandButton id="update" value="Enregistrer" action="#{mouvement.faireMouvement}"/>                       
+                        </h:panelGrid>
+                    </h:form>
+                    <h:outputText value="Aucun compte pour l' ID : #{mouvement.idCompte} !" rendered="#{mouvement.compteBancaire == null}"/>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
