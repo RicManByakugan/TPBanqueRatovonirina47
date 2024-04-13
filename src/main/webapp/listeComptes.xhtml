@@ -19,7 +19,11 @@
                     <p:dataTable value="#{listeComptes.allComptes}"
                                  var="item" 
                                  widgetVar="compteBancaireTable"
-                                 emptyMessage="Aucun compte avec ce critère" >
+                                 emptyMessage="Aucun compte avec ce critère"
+                                 paginator="true"
+                                 rows="10" 
+                                 rowsPerPageTemplate="2,4,8,10"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                         <p:column width="40">
                             <f:facet name="header">
                                 <h:outputText value="Id"/>
