@@ -34,5 +34,10 @@ public class ListeComptes implements Serializable {
         }
         return allComptes;
     }
-    
+
+    public String supprimerCompte(CompteBancaire compteBancaire) {
+        gestionnaireCompte.supprimerCompte(compteBancaire);
+        return "listeComptes?faces-redirect=true";
+    }
+
 }
