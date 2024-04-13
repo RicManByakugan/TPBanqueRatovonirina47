@@ -6,7 +6,6 @@ package mg.eric.ratovonirina47tpbanque.service;
 
 import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -38,6 +37,7 @@ public class GestionnaireCompte {
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
 
+    @Transactional
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     }
