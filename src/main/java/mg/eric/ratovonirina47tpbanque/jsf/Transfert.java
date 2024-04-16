@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
+import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
 import mg.eric.ratovonirina47tpbanque.service.GestionnaireCompte;
 
 /**
@@ -56,10 +57,24 @@ public class Transfert implements Serializable {
         this.montant = montant;
     }
 
-    public String transferer(){
-        CompteBancaire source = gestionnaireCompte.findById(idSource);       
+    public String transferer() {
+        boolean erreur = false;
+        CompteBancaire source = gestionnaireCompte.findById(idSource);
         CompteBancaire destination = gestionnaireCompte.findById(idDestination);
-        gestionnaireCompte.transferer(source,destination,montant);
+        if (source == null || destination == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
+            erreur = true;
+        } else {
+            if (source.getSolde() < montant) {
+                Util.messageErreur("Solde insuffisant !", "Solde insuffisant !", "form:source");
+                erreur = true;
+            }
+        }
+        if (erreur) {
+            return null;
+        }
+        gestionnaireCompte.transferer(source, destination, montant);
+        Util.addFlashInfoMessage("Transfert correctement effectué");
         return "listeComptes";
     }
 }
