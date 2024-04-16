@@ -48,21 +48,30 @@
                             <f:facet name="header">
                                 <h:outputText value="Opérations"/>
                             </f:facet>
-                            <h:commandLink action="#{listeComptes.supprimerCompte(item)}"
-                                           title="Supprimer le compte de #{item.nom}" >
-                                <h:graphicImage name="images/del.png"/>
-                            </h:commandLink>
+                            <p:commandLink action="#{listeComptes.supprimerCompte(item)}" 
+                                           title="Supprimer ce compte">
+                                <h:graphicImage name="images/del.png" />
+                                <p:confirm header="Confirmation de suppression"
+                                           message="Voulez-vous vraiment supprimer ?" />
+                            </p:commandLink>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value=""/>
                             </f:facet>                           
                             <h:link  outcome="miseajour?idCompte=#{item.id}" 
-                            value="MAJ"/>
+                                     value="MAJ"/>
                         </p:column>
                     </p:dataTable>
+                    <p:confirmDialog global="true">
+                        <p:commandButton value="Oui" type="button" 
+                                         styleClass="ui-confirmdialog-yes"/>
+                        <p:commandButton value="Non" type="button" 
+                                         styleClass="ui-confirmdialog-no"/>
+                    </p:confirmDialog>
                 </h:form>
                 <h:messages/>
+
             </ui:define>
         </ui:composition>
     </body>
