@@ -69,12 +69,16 @@ public class Transfert implements Serializable {
                 Util.messageErreur("Solde insuffisant !", "Solde insuffisant !", "form:source");
                 erreur = true;
             }
+            if (montant < 0) {
+                Util.messageErreur("", "Ne peut pas etre negative !", "form:source");
+                erreur = true;
+            }
         }
         if (erreur) {
             return null;
         }
         gestionnaireCompte.transferer(source, destination, montant);
         Util.addFlashInfoMessage("Transfert correctement effectué");
-        return "listeComptes";
+        return "transfert?faces-redirect=true";
     }
 }
