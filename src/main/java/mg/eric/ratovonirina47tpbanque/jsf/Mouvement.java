@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
+import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
 import mg.eric.ratovonirina47tpbanque.service.GestionnaireCompte;
 
 /**
@@ -76,6 +77,7 @@ public class Mouvement implements Serializable {
             compteBancaire.retirer(somme);
             gestionnaireCompte.update(compteBancaire);
         } else {
+            Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
             return "listeComptes?faces-redirect=true";
         }        
         return "listeComptes?faces-redirect=true";
