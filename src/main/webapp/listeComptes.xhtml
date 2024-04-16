@@ -51,16 +51,11 @@
                             <p:commandLink action="#{listeComptes.supprimerCompte(item)}" 
                                            title="Supprimer ce compte">
                                 <h:graphicImage name="images/del.png" />
+                                <h:link  outcome="miseajour?idCompte=#{item.id}" 
+                                     value="Modifier"/>
                                 <p:confirm header="Confirmation de suppression"
                                            message="Voulez-vous vraiment supprimer ?" />
                             </p:commandLink>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value=""/>
-                            </f:facet>                           
-                            <h:link  outcome="miseajour?idCompte=#{item.id}" 
-                                     value="MAJ"/>
                         </p:column>
                     </p:dataTable>
                     <p:confirmDialog global="true">

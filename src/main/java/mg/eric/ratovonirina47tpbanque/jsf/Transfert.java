@@ -78,7 +78,7 @@ public class Transfert implements Serializable {
             return null;
         }
         gestionnaireCompte.transferer(source, destination, montant);
-        Util.addFlashInfoMessage("Transfert correctement effectué");
+        Util.addFlashInfoMessage("Transfert correctement effectué entre " + source.getId() + " et " + destination.getId() + " = " + montant);
         return "transfert?faces-redirect=true";
     }
 }
