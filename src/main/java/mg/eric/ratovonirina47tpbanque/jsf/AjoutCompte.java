@@ -54,7 +54,7 @@ public class AjoutCompte implements Serializable {
     {
         CompteBancaire compteBancaire = new CompteBancaire( nom , solde );
         gestionnaireCompte.creerCompte(compteBancaire);
-        Util.messageErreur("Le compte de " + nom + " a été bien créé avec un solde inital de " + solde, "Le compte de " + nom + " a été bien créé avec un solde inital de " + solde, "form:source");
+        Util.addFlashInfoMessage("Le compte de " + nom + " a été bien créé avec un solde inital de " + solde);
         return "listeComptes?faces-redirect=true" ;
     }
     
