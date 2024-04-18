@@ -52,13 +52,15 @@
                                            title="Supprimer le compte de #{item.nom}" >
                                 <h:graphicImage name="images/del.png"/>
                             </h:commandLink>
+                            <h:link  outcome="miseajour?idCompte=#{item.id}" 
+                                     value="Modifier"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value=""/>
-                            </f:facet>                           
-                            <h:link  outcome="miseajour?idCompte=#{item.id}" 
-                            value="MAJ"/>
+                                <h:outputText value="Historiques"/>
+                            </f:facet>
+                            <h:link  outcome="operations?idCompte=#{item.id}" 
+                                     value="Modifier"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
