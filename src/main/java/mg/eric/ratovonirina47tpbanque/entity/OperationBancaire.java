@@ -33,10 +33,10 @@ public class OperationBancaire implements Serializable {
     public OperationBancaire() {
     }
 
-    public OperationBancaire(String description, LocalDateTime dateOperation, int montant) {
+    public OperationBancaire(String description, int montant) {
         this.description = description;
-        this.dateOperation = dateOperation;
         this.montant = montant;
+        dateOperation = LocalDateTime.now();
     }
 
     public String getDescription() {
