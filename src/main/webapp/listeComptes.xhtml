@@ -57,10 +57,10 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Historiques"/>
+                                <h:outputText escape="false" value="Historique&lt;br/>opérations"/>
                             </f:facet>
                             <h:link  outcome="operations?idCompte=#{item.id}" 
-                                     value="Modifier"/>
+                                     value="Détaille"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>

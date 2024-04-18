@@ -52,7 +52,7 @@ public class CompteBancaire implements Serializable {
 
     public void deposer(int montant) {
         solde += montant;
-        operations.add(new OperationBancaire("Dépot d'argent", solde));
+        operations.add(new OperationBancaire("Crédit", -solde));
     }
 
     public void retirer(int montant) {
@@ -61,7 +61,7 @@ public class CompteBancaire implements Serializable {
         } else {
             solde = 0;
         }
-        operations.add(new OperationBancaire("Retrait d'argent", solde));
+        operations.add(new OperationBancaire("Débit", -solde));
     }
 
     public void setNom(String nom) {
