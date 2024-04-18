@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
+import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
 import mg.eric.ratovonirina47tpbanque.service.GestionnaireCompte;
 
 /**
@@ -53,7 +54,7 @@ public class AjoutCompte implements Serializable {
     {
         CompteBancaire compteBancaire = new CompteBancaire( nom , solde );
         gestionnaireCompte.creerCompte(compteBancaire);
-        System.out.print("Le compte de " + nom + " a été bien créé avec un solde inital de " + solde);
+        Util.messageErreur("Le compte de " + nom + " a été bien créé avec un solde inital de " + solde, "Le compte de " + nom + " a été bien créé avec un solde inital de " + solde, "form:source");
         return "listeComptes?faces-redirect=true" ;
     }
     
