@@ -8,7 +8,11 @@ import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
+import mg.eric.ratovonirina47tpbanque.entity.OperationBancaire;
 import mg.eric.ratovonirina47tpbanque.service.GestionnaireCompte;
 
 /**
@@ -49,5 +53,11 @@ public class Operations implements Serializable {
     public void loadCompte() {
         compteBancaire = gestionnaireCompte.findById(idCompte);
     }
+    
+    public List<OperationBancaire> loadOperation() {
+        return compteBancaire.getOperations();
+    }
+    
+
     
 }

@@ -25,32 +25,36 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:dataTable value="#{operations.compteBancaire.operations}"
+                    <p:dataTable value="#{operations.loadOperation()}"
                                  var="item" 
                                  widgetVar="OperationCompteBancaireTable"
-                                 paginator="true"
+                                 paginator="false"
                                  rows="10" 
                                  rowsPerPageTemplate="2,4,8,10"
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                        <p:column sortBy="#{item.id}" filterBy="#{item.id}" width="40">
+                        <p:column width="40">
                             <f:facet name="header">
                                 <h:outputText value="Id"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
-                        <p:column sortBy="#{item.description}" filterBy="#{item.description}">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Description"/>
                             </f:facet>
                             <h:outputText value="#{item.description}"/>
                         </p:column>
-                        <p:column sortBy="#{item.dateOperation}" filterBy="#{item.dateOperation}">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Date Opération"/>
                             </f:facet>
-                            <h:outputText value="#{item.dateOperation}"/>
+                            <!--<h:outputText value="#{item.dateOperation}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" converter="javax.faces.convert.LocalDateTimeConverter
+                                                   " />
+                            </h:outputText>-->
+                            <h:outputText value="#{item.dateOperation}" />
                         </p:column>
-                        <p:column sortBy="#{item.montant}" filterBy="#{item.montant}">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Montant"/>
                             </f:facet>
