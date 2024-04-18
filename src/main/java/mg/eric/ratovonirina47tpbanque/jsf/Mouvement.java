@@ -7,6 +7,7 @@ package mg.eric.ratovonirina47tpbanque.jsf;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
 import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
@@ -63,24 +64,31 @@ public class Mouvement implements Serializable {
         this.type = type;
     }
 
-    public Mouvement() {}
+    public Mouvement() {
+    }
 
     public void loadCompte() {
         compteBancaire = gestionnaireCompte.findById(idCompte);
     }
 
     public String faireMouvement() {
-        if (type.equals("depot")) {
-            compteBancaire.deposer(somme);
-            gestionnaireCompte.update(compteBancaire);
-        } else if (type.equals("retrait")) {
-            compteBancaire.retirer(somme);
-            gestionnaireCompte.update(compteBancaire);
-        } else {
-            Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
+        try {
+            if (type.equals("depot")) {
+                compteBancaire.deposer(somme);
+                gestionnaireCompte.update(compteBancaire);
+            } else if (type.equals("retrait")) {
+                compteBancaire.retirer(somme);
+                gestionnaireCompte.update(compteBancaire);
+            } else {
+                Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
+                return "listeComptes?faces-redirect=true";
+            }
             return "listeComptes?faces-redirect=true";
-        }        
-        return "listeComptes?faces-redirect=true";
+        } catch (OptimisticLockException e) {
+            Util.addFlashInfoMessage("Réessayer plus tard : Le compte de " + compteBancaire.getNom() + " a été modifié ou supprimé par un autre utilisateur !");
+            return null;
+        }
+
     }
 
 }

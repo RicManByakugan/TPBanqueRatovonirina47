@@ -7,6 +7,7 @@ package mg.eric.ratovonirina47tpbanque.jsf;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
 import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
@@ -57,24 +58,29 @@ public class Transfert implements Serializable {
         this.montant = montant;
     }
 
-    public String transferer(){
-        boolean erreur = false;
-        CompteBancaire source = gestionnaireCompte.findById(idSource);       
-        CompteBancaire destination = gestionnaireCompte.findById(idDestination);
-        if (source == null || destination == null) {
-            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
-            erreur = true;
-        } else {
-            if (source.getSolde() < montant) {
-                Util.messageErreur("Solde insuffisant !", "Solde insuffisant !", "form:source");
+    public String transferer() {
+        try {
+            boolean erreur = false;
+            CompteBancaire source = gestionnaireCompte.findById(idSource);
+            CompteBancaire destination = gestionnaireCompte.findById(idDestination);
+            if (source == null || destination == null) {
+                Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
                 erreur = true;
+            } else {
+                if (source.getSolde() < montant) {
+                    Util.messageErreur("Solde insuffisant !", "Solde insuffisant !", "form:source");
+                    erreur = true;
+                }
             }
+            if (erreur) {
+                return null;
+            }
+            gestionnaireCompte.transferer(source, destination, montant);
+            Util.addFlashInfoMessage("Transfert correctement effectué");
+            return "listeComptes";
+        } catch (OptimisticLockException ex) {
+            Util.messageErreur("Une erreur s'est produite !");
+            return "listeComptes";
         }
-        if (erreur) {
-            return null;
-        }
-        gestionnaireCompte.transferer(source, destination, montant);
-        Util.addFlashInfoMessage("Transfert correctement effectué");
-        return "listeComptes";
     }
 }
