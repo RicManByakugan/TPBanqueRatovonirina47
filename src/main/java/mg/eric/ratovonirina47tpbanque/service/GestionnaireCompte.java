@@ -24,7 +24,7 @@ import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
     serverName="localhost",
     portNumber=3306,
     user="root",              
-    password="mysql1234MYSQL",
+    password="root",
     databaseName="banque",
     properties = {
       "useSSL=false",

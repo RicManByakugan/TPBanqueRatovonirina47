@@ -83,6 +83,7 @@ public class Mouvement implements Serializable {
                 Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
                 return "listeComptes?faces-redirect=true";
             }
+            Util.addFlashInfoMessage("Mouvement effectué");
             return "listeComptes?faces-redirect=true";
         } catch (OptimisticLockException e) {
             Util.addFlashInfoMessage("Réessayer plus tard : Le compte de " + compteBancaire.getNom() + " a été modifié ou supprimé par un autre utilisateur !");

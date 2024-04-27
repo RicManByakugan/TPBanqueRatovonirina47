@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import mg.eric.ratovonirina47tpbanque.entity.CompteBancaire;
+import mg.eric.ratovonirina47tpbanque.jsf.util.Util;
 import mg.eric.ratovonirina47tpbanque.service.GestionnaireCompte;
 
 /**
@@ -47,6 +48,7 @@ public class MiseAJour implements Serializable {
     }
     
     public void mettreAjour(){
+        Util.addFlashInfoMessage("Mise a jour effectué");
         gestionnaireCompte.update(compteBancaire);
     }
     
