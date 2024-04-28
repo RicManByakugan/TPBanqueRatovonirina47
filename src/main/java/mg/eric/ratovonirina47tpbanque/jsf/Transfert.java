@@ -60,24 +60,10 @@ public class Transfert implements Serializable {
 
     public String transferer() {
         try {
-            boolean erreur = false;
             CompteBancaire source = gestionnaireCompte.findById(idSource);
             CompteBancaire destination = gestionnaireCompte.findById(idDestination);
-            if (source == null || destination == null) {
-                Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
-                erreur = true;
-            } else {
-                if (source.getSolde() < montant) {
-                    Util.messageErreur("Solde insuffisant !", "Solde insuffisant !", "form:source");
-                    erreur = true;
-                }
-            }
-            if (erreur) {
-                return null;
-            }
-            gestionnaireCompte.transferer(source, destination, montant);
-            Util.addFlashInfoMessage("Transfert correctement effectué");
-            return "listeComptes";
+            String resultat = gestionnaireCompte.transferer(source, destination, montant);
+            return resultat;
         } catch (OptimisticLockException ex) {
             Util.messageErreur("Une erreur s'est produite !");
             return "listeComptes";

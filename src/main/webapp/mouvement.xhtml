@@ -68,7 +68,7 @@
                             <h:outputLabel  value="Montant pour le mouvement :" 
                                             for="somme"/>
                             <h:inputText id="somme" size="3" value="#{mouvement.somme}"
-                                         required="true" validator="#{mouvement.verificationSolde}" />
+                                         required="true" />
                             <h:message for="somme"/>
                             <h:commandButton id="update" value="Enregistrer" action="#{mouvement.faireMouvement}"/>                       
                         </h:panelGrid>

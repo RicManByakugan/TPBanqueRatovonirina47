@@ -5,11 +5,6 @@
 package mg.eric.ratovonirina47tpbanque.jsf;
 
 import jakarta.inject.Named;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.component.UIInput;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.validator.ValidatorException;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.OptimisticLockException;
@@ -76,51 +71,14 @@ public class Mouvement implements Serializable {
         compteBancaire = gestionnaireCompte.findById(idCompte);
     }
 
-    public void verificationSolde(FacesContext fc, UIComponent composant, Object value) {
-        UIInput composantTypeMouvement = (UIInput) composant.findComponent("type");
-        String TypeDeMouvement = (String) composantTypeMouvement.getLocalValue();
-        if (TypeDeMouvement == null) {
-            return;
-        }
-        int sommeMouvement = (int) value;
-        if (TypeDeMouvement.equals("retrait")) {
-            if (compteBancaire.getSolde() < sommeMouvement ) {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Solde insuffisante","");
-                throw new ValidatorException(message);
-            }
-        }else if (TypeDeMouvement.equals("depot")) {
-            return;
-        }else{
-            Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
-            return;
-        }
-    }
-
     public String faireMouvement() {
         try {
-            if(somme <= 0){
-                Util.addFlashInfoMessage("Entrer une somme supérieur à 0");
-                return null;
-            }
-            if (type.equals("depot")) {
-                compteBancaire.deposer(somme);
-                gestionnaireCompte.update(compteBancaire);
-                Util.addFlashInfoMessage("Depot effectué pour " + compteBancaire.getNom() + " avec la somme de " + somme);
-                return "listeComptes?faces-redirect=true";
-            } else if (type.equals("retrait")) {
-                compteBancaire.retirer(somme);
-                gestionnaireCompte.update(compteBancaire);
-                Util.addFlashInfoMessage("Retrait effectué pour " + compteBancaire.getNom() + " avec la somme de " + somme);
-                return "listeComptes?faces-redirect=true";
-            } else {
-                Util.messageErreur("Choisissez entre retait et depot", "Choisissez entre retait et depot", "form:source");
-                return null;
-            }
+            String resultat = gestionnaireCompte.FaireLeMouvement(type, somme, compteBancaire);
+            return resultat;
         } catch (OptimisticLockException e) {
             Util.addFlashInfoMessage("Réessayer plus tard : Le compte de " + compteBancaire.getNom() + " a été modifié ou supprimé par un autre utilisateur !");
             return null;
         }
-
     }
 
 }
